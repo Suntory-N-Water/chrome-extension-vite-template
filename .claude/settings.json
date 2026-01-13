@@ -17,27 +17,11 @@
       "Bash(gh issue view:*)",
       "Bash(cat:*)",
       "Bash(chmod:*)",
-      "Bash(bash:*)",
-      "Bash(pnpm run format:check:*)",
-      "Bash(pnpm run lint:*)",
-      "Bash(pnpm run check:*)",
-      "Bash(pnpm run check:fix:*)",
-      "Bash(pnpm run ai-check:*)",
-      "Bash(pnpm run ci:*)",
       "Bash(find:*)",
-      "Bash(pnpm add:*)",
-      "Bash(pnpm run check:tags:*)",
-      "Bash(bun:*)",
       "Bash(gh api:*)",
       "Bash(gh label list:*)",
-      "Bash({} ;)",
       "Bash(gh issue list:*)",
-      "Bash(for:*)",
-      "Bash(sed:*)",
-      "Bash(gh issue comment:*)",
-      "WebFetch",
-      "WebSearch",
-      "Bash(bunx biome:*)"
+      "Bash(gh issue comment:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",
@@ -63,7 +47,10 @@
       "Bash(git switch:*)",
       "Bash(bun add:*)",
       "Bash(bun remove:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(curl:*",
+      "WebFetch",
+      "WebSearch"
     ]
   },
   "hooks": {
