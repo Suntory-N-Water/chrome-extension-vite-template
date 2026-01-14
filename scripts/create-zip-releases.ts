@@ -26,17 +26,29 @@ async function createZipReleases() {
   for (const tag of tags) {
     console.log(`\n📦 Processing tag: ${tag}`);
 
-    const [packageName, version] = tag.split('@');
-    const packageDir = join('packages', packageName);
+    // @chrome-extension-template/example-extension@0.0.1 形式を解析
+    // スコープ付きパッケージ名に対応するため、最後の @ で分割
+    const lastAtIndex = tag.lastIndexOf('@');
+    const fullPackageName = tag.slice(0, lastAtIndex); // @chrome-extension-template/example-extension
+    const version = tag.slice(lastAtIndex + 1); // 0.0.1
+
+    // ディレクトリ名を抽出 (example-extension)
+    const packageDirName = fullPackageName.split('/').pop() || '';
+    if (!packageDirName) {
+      console.log(`⚠ Skipping ${tag}: could not extract package directory name`);
+      continue;
+    }
+
+    const packageDir = join('packages', packageDirName);
     const distDir = join(packageDir, 'dist');
 
     if (!existsSync(distDir)) {
-      console.log(`⚠ Skipping ${packageName}: no dist/ directory`);
+      console.log(`⚠ Skipping ${fullPackageName}: no dist/ directory`);
       continue;
     }
 
     // ZIPファイルを作成
-    const zipFile = `${packageName}.zip`;
+    const zipFile = `${packageDirName}.zip`;
     const zipPath = join(packageDir, zipFile);
 
     console.log(`  Creating ${zipFile}...`);
@@ -54,11 +66,11 @@ async function createZipReleases() {
 
     // GitHub Releaseを作成
     const releaseNotes = [
-      `Release of ${packageName} version ${version}`,
+      `Release of ${fullPackageName} version ${version}`,
       '',
       '## Installation',
       '',
-      `1. Download \`${packageName}.zip\``,
+      `1. Download \`${packageDirName}.zip\``,
       '2. Extract the archive',
       '3. Open Chrome and navigate to `chrome://extensions/`',
       '4. Enable "Developer mode"',
