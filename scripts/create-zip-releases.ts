@@ -1,4 +1,4 @@
-import { execSync } from 'node:child_process';
+import { execSync, spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -35,7 +35,9 @@ async function createZipReleases() {
     // ディレクトリ名を抽出 (example-extension)
     const packageDirName = fullPackageName.split('/').pop() || '';
     if (!packageDirName) {
-      console.log(`⚠ Skipping ${tag}: could not extract package directory name`);
+      console.log(
+        `⚠ Skipping ${tag}: could not extract package directory name`,
+      );
       continue;
     }
 
@@ -80,10 +82,24 @@ async function createZipReleases() {
     ].join('\n');
 
     console.log(`  Creating GitHub Release...`);
-    execSync(
-      `gh release create "${tag}" "${zipPath}" --title "${tag}" --notes "${releaseNotes}"`,
-      { stdio: 'inherit' }
+    // spawnSync を使用してシェル解釈を回避（バッククォートなどの特殊文字対策）
+    const result = spawnSync(
+      'gh',
+      [
+        'release',
+        'create',
+        tag,
+        zipPath,
+        '--title',
+        tag,
+        '--notes',
+        releaseNotes,
+      ],
+      { stdio: 'inherit' },
     );
+    if (result.status !== 0) {
+      throw new Error(`gh release create failed with status ${result.status}`);
+    }
 
     console.log(`  ✓ Created release: ${tag}`);
   }
