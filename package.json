@@ -12,7 +12,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=22.0.0",
-    "pnpm": ">=9.15.4"
+    "pnpm": ">=10.0.0"
   },
   "bugs": {
     "url": "https://github.com/Suntory-N-Water/chrome-extension-vite-template/issues"
@@ -43,6 +43,5 @@
     "@types/node": "^25.0.8",
     "globals": "^16.5.0",
     "typescript": "~5.9.3"
-  },
-  "packageManager": "pnpm@9.15.4"
+  }
 }
