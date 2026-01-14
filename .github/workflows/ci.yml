@@ -3,8 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    paths:
-      ["**/*.ts", "**/*.tsx", "**/*.js", ".github/**", "**/*.json", "**/*.svg"]
+    paths: ["**/*.ts", "**/*.tsx", "**/*.js", ".github/**", "**/*.json"]
 
 defaults:
   run:
