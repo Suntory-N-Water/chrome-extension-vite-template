@@ -15,8 +15,7 @@
       "**/*.jsonc",
       "**/*.html",
       "!node_modules",
-      "!!**/dist",
-      "!worker-configuration.d.ts"
+      "!!**/dist"
     ]
   },
   "formatter": {
@@ -98,12 +97,6 @@
       "formatter": {
         "enabled": false
       },
-      "linter": {
-        "enabled": false
-      }
-    },
-    {
-      "includes": ["**/route.ts", "**/route.tsx"],
       "linter": {
         "enabled": false
       }

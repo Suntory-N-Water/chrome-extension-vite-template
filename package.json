@@ -31,6 +31,11 @@
     "dev:example": "pnpm --filter example-extension dev",
     "build:example": "pnpm --filter example-extension build",
     "build:all": "pnpm -r --parallel build",
+    "changeset": "changeset",
+    "version": "changeset version && pnpm run sync-manifest",
+    "sync-manifest": "tsx scripts/sync-manifest-version.ts",
+    "release": "changeset tag && pnpm run create-zip-releases",
+    "create-zip-releases": "tsx scripts/create-zip-releases.ts",
     "format": "biome format --write ./packages",
     "check": "biome check ./packages",
     "check:fix": "biome check --write ./packages",
@@ -40,8 +45,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@types/node": "^25.0.8",
+    "glob": "^13.0.0",
     "globals": "^16.5.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3"
   }
 }
