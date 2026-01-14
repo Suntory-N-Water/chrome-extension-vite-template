@@ -81,6 +81,10 @@ async function createZipReleases() {
       'Or upload to Chrome Web Store manually.',
     ].join('\n');
 
+    // タグをリモートにプッシュ（GitHub Releaseを作成するために必要）
+    console.log(`  Pushing tag to remote...`);
+    execSync(`git push origin "${tag}"`, { stdio: 'inherit' });
+
     console.log(`  Creating GitHub Release...`);
     // spawnSync を使用してシェル解釈を回避（バッククォートなどの特殊文字対策）
     const result = spawnSync(
