@@ -17,8 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: lint
+  check:
+    name: check
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
@@ -28,7 +28,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup
-      - run: pnpm run lint
+      - run: pnpm run check
 
   type-check:
     name: type-check

@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# Chrome Extension Vite Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite を使用した Chrome 拡張機能開発のための pnpm モノレポテンプレート
 
-Currently, two official plugins are available:
+## 必要な環境
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 22 以上
+- pnpm 9.x（プロジェクトでは 9.15.4 を使用）
 
-## React Compiler
+## セットアップ
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 依存関係をインストール
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 開発
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# サンプル拡張機能の開発サーバー起動
+pnpm --filter example-extension dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Chrome で chrome://extensions/ を開き、
+# packages/example-extension/dist/ を読み込む
 ```
+
+## ビルド
+
+```bash
+# 特定の拡張機能をビルド
+pnpm --filter example-extension build
+
+# 全パッケージをビルド
+pnpm -r --parallel build
+```
+
+## リント・フォーマット
+
+```bash
+# チェック
+pnpm check
+
+# 自動修正
+pnpm check:fix
+
+# 型チェック
+pnpm type-check
+```
+
+## プロジェクト構造
+
+```
+chrome-extension-vite-template/
+├── packages/
+│   ├── ui/                    # 共有UIコンポーネント
+│   └── example-extension/     # サンプル拡張機能
+├── tsconfig.base.json         # TypeScript基本設定
+├── biome.jsonc                # リント・フォーマット設定
+└── pnpm-workspace.yaml        # ワークスペース定義
+```
+
+## 新しい拡張機能の追加
+
+```bash
+# テンプレートをコピー
+cp -r packages/example-extension packages/my-extension
+
+# package.json と vite.config.ts を編集
+# pnpm install
+# pnpm --filter my-extension dev
+```
+
+## 共有UIコンポーネントの使用
+
+```typescript
+import { Button } from '@chrome-extension-template/ui';
+import '@chrome-extension-template/ui/styles';
+```
+
+## 技術スタック
+
+- Vite 7.3.1
+- React 19.2.3
+- TypeScript 5.9.3
+- Tailwind CSS 4.1.18
+- Biome 2.3.8
+- @crxjs/vite-plugin
+- shadcn/ui

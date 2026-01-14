@@ -8,9 +8,15 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
 *.local
+
+# モノレポ対応
+packages/*/dist
+packages/*/dist-ssr
+packages/*/node_modules
+packages/*/.turbo
+packages/*/tsconfig.tsbuildinfo
+*.tsbuildinfo
 
 # Editor directories and files
 .idea
@@ -23,3 +29,4 @@ dist-ssr
 
 # claude code mcp setting
 .mcp.json
+.serena
