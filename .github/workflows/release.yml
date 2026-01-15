@@ -29,11 +29,17 @@ jobs:
       - name: Build all packages
         run: pnpm build:all
 
-      - name: Create Release Pull Request or Publish
+      - name: Create Release Pull Request
         id: changesets
         uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         with:
           version: pnpm run version
-          publish: pnpm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Version Packages PR がマージされた時のみタグとリリースを作成
+      - name: Create tags and GitHub Releases
+        if: startsWith(github.event.head_commit.message, 'Version Packages')
+        run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
