@@ -39,7 +39,7 @@ jobs:
 
       # Version Packages PR がマージされた時のみタグとリリースを作成
       - name: Create tags and GitHub Releases
-        if: startsWith(github.event.head_commit.message, 'Version Packages')
+        if: contains(github.event.head_commit.message, 'Version Packages')
         run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
