@@ -7,7 +7,7 @@ import { defineConfig } from 'vite';
 const manifest = defineManifest({
   manifest_version: 3,
   name: 'テスト拡張機能',
-  version: '0.0.0',
+  version: '0.0.2',
   description:
     '拡張機能のオプションページを開いてボタンを押すと、コンソールにメッセージが表示されます。',
   host_permissions: ['http://localhost:5173/*'],
